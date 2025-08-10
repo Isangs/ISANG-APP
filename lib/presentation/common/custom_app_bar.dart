@@ -16,6 +16,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.icon,
     this.actions,
     this.backgroundColor = Colors.white,
+    required void Function() onIconPressed,
   });
 
   @override
@@ -55,6 +56,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Color backgroundColor;
   final String icon;
+  final VoidCallback? onIconPressed; // 콜백 추가
 
   const HomeAppBar({
     super.key,
@@ -63,6 +65,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.icon,
     this.actions,
     this.backgroundColor = Colors.white,
+    this.onIconPressed, // 선택적 매개변수로 추가
   });
 
   @override
@@ -87,7 +90,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
             GestureDetector(
-              onTap: () => print('휴지통'),
+              onTap: onIconPressed ?? () => print('휴지통'),
+              // 콜백이 있으면 사용, 없으면 기본 동작
               child: SvgPicture.asset(
                 'assets/icons/$icon.svg',
                 height: 40,
@@ -108,6 +112,7 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
   final String firstIcon;
   final String secondIcon;
+  final VoidCallback? onFirstIconTap; // 추가
 
   const FeedAppBar({
     super.key,
@@ -116,6 +121,7 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor = Colors.white,
     required this.firstIcon,
     required this.secondIcon,
+    this.onFirstIconTap, // 추가
   });
 
   @override
@@ -136,7 +142,7 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () => print('검색'),
+                  onTap: onFirstIconTap ?? () => print('검색'), // 콜백 연결
                   child: SvgPicture.asset(
                     'assets/icons/$firstIcon.svg',
                     height: 40,

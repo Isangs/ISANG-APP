@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:isang/core/constants/app_color.dart';
 import 'package:isang/core/constants/text_styles.dart';
 import 'profile_edit_dialog.dart';
@@ -19,7 +18,6 @@ class _ProfileCardState extends State<ProfileCard> {
   String userEmail = 'isang@example.com';
   String userBio = '매일 성장하는 개발자입니다!';
   File? selectedImage;
-  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {

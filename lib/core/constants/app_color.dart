@@ -24,6 +24,17 @@ class AppColor {
   static const Color progressBarPercent = Color(0xFF4A5462);
   static const Color goalPercentage = Color(0xFF374151);
 
+  // ────────────── Gray 색상 시리즈 ──────────────
+  static const Color gray100 = Color(0xFFF3F4F6); // 매우 밝은 회색
+  static const Color gray200 = Color(0xFFE5E7EB); // 밝은 회색
+  static const Color gray300 = Color(0xFFD1D5DB); // 중간 밝은 회색
+  static const Color gray400 = Color(0xFF9CA3AF); // 중간 회색
+  static const Color gray500 = Color(0xFF6B7280); // 중간 어두운 회색
+  static const Color gray600 = Color(0xFF4B5563); // 어두운 회색
+  static const Color gray700 = Color(0xFF374151); // 매우 어두운 회색
+  static const Color gray800 = Color(0xFF1F2937); // 거의 검은색
+  static const Color gray900 = Color(0xFF111827); // 검은색
+
   // ────────────── 상태 컬러 ──────────────
   static const Color success = Color(0xFF10B981); // 완료, 성공
   static const Color warning = Color(0xFFF59E0B); // 경고
@@ -40,8 +51,21 @@ class AppColor {
   };
 
   // ────────────── 그라데이션 컬러 ──────────────
+  // Primary 그라데이션 (메인 테마)
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [Color(0xFFA855F7), Color(0xFF9333EA)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   static const LinearGradient backgroundGradient = LinearGradient(
     colors: [Color(0xFFFAF5FF), Color(0xFFEFF6FF), Color(0xFFE0E7FF)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient darkbackgroundGradient = LinearGradient(
+    colors: [Color(0xFF581C87), Color(0xFF1E3A8A), Color(0xFF312E81)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
@@ -63,6 +87,11 @@ class AppColor {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
+  static const LinearGradient lightGreenGradient = LinearGradient(
+    colors: [Color(0xFF4ADE80), Color(0xFF10B981)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   static const LinearGradient tealGradient = LinearGradient(
     colors: [Color(0xFF22D3EE), Color(0xFF14B8A6)],
@@ -77,6 +106,14 @@ class AppColor {
   );
   static const LinearGradient yellowGradient = LinearGradient(
     colors: [Color(0xffFACC15), Color(0xFFEAB308)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+  static const LinearGradient gradientWhiteColor = LinearGradient(
+    colors: [Color(0xffFFFFFF), Color(0xFFF3F4F6)],
+  );
+  static const LinearGradient greyGradient = LinearGradient(
+    colors: [Color(0xff9CA3AF), Color(0xFF6B7280)],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );

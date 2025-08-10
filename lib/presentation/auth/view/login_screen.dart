@@ -4,9 +4,78 @@ import 'package:isang/app_router.dart';
 import 'package:isang/core/constants/app_color.dart';
 import 'package:isang/core/constants/app_string.dart';
 import 'package:isang/core/constants/text_styles.dart';
+import '../../../data/services/auth_service.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final AuthService _authService = AuthService();
+  bool _isLoading = false;
+
+  Future<void> _handleKakaoLogin() async {
+    if (_isLoading) return;
+    
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await _authService.loginWithKakao();
+
+      final msg = result?['message'] ?? '처리 중...';
+      final success = result?['success'] == true;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(msg),
+          backgroundColor: success ? Colors.green : Colors.black87,
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      // 1) 서버가 즉시 토큰을 반환해 저장한 경우(현재 auth_service 구현)
+      //    -> 바로 홈으로 이동
+      // 2) 서버가 딥링크(isang://oauth)로 토큰을 전달하는 경우
+      //    -> main.dart의 딥링크 핸들러가 네비게이션 수행
+      if (success && mounted) {
+        Navigator.pushReplacementNamed(context, AppRoutes.navigation);
+      }
+    } catch (error) {
+      // 예외 처리
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('로그인 중 오류가 발생했습니다: $error'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  // 이미 로그인된 상태인지 확인
+  Future<void> _checkLoginStatus() async {
+    final isLoggedIn = await _authService.isLoggedIn();
+    if (isLoggedIn && mounted) {
+      Navigator.pushReplacementNamed(context, AppRoutes.navigation);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +129,24 @@ class LoginScreen extends StatelessWidget {
                   gradient: AppColor.yellowGradient,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: GestureDetector(child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset('assets/icons/kakaoLoginIcon.svg'),
-                    SizedBox(width: 12,),
-                    Text(AppStrings.loginButtenText,
-                    style: AppTextStyles.button,)
-                  ],
+                child: GestureDetector(
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset('assets/icons/kakaoLoginIcon.svg'),
+                            SizedBox(width: 12),
+                            Text(
+                              AppStrings.loginButtenText,
+                              style: AppTextStyles.button,
+                            )
+                          ],
+                        ),
+                  onTap: _isLoading ? null : _handleKakaoLogin,
                 ),
-                onTap: () => Navigator.pushReplacementNamed(context, AppRoutes.navigation)),
               ),
               SizedBox(height: 60),
               RichText(

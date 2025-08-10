@@ -45,5 +45,24 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>kakao</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao7c96d2d6f1f07f1b76ffabb890845f4b</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>isang.oauth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>isang</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
